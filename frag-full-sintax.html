@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 2 - Inline Style</title>
+    <title>Aula 2 - Fragments - Sintaxe completa</title>
 </head>
 <body>
     <div id="root"></div>
@@ -13,16 +13,19 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
-        const estilo = {
-            color: 'blue',
-            backgroundColor: 'lightgray',
-            padding: '50px',
-            borderRadius: '5px'
-        };
-
-
+        function Lista(){
+            return(
+            <React.Fragment>
+            <li> Item 1 </li>
+            <li> Item 2 </li>
+            <li> Item 3 </li>
+            </React.Fragment>
+        );
+        }
         ReactDOM.createRoot(document.getElementById('root')).render(
-            <h1 style={estilo}> Estilo inline </h1>
+            <ul>
+                <Lista />
+            </ul>
         );
 
     </script>
