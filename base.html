@@ -18,10 +18,11 @@
             primary: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded',
         }
 
-    function Button({children, variant = 'default', ...props}) {
+    function Button({children, className, variant = 'default', ...props}) {
         return (
             <button className =
-            {`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${buttonVariants[variant]}`} 
+            {`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${buttonVariants[variant]}
+                ${className}`} 
             {...props} >
              {children}
             </button>
@@ -30,7 +31,7 @@
      function App() {
         return (
             <div className="text-center mt-10 space-x-4">
-                <Button title = "Meu botão">Default Button</Button>
+                <Button title = "Meu botão" className="mr-14">Default Button</Button>
                 <Button variant="primary">Primary Button</Button>
             </div>
             
