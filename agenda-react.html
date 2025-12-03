@@ -241,6 +241,43 @@ function CompromissoItem({horario, titulo, descricao}){
     )
 }
 
+function Agenda({data, compromissos}){
+    (
+        <Card
+           title="Agenda do dia"
+           variant="primary"
+         >  
+         <Texto variant="body" color="gray-600" className="capitalize">
+            {data}
+         </Texto>
+
+         <div className="space-y-3">
+            <Texto variant="h4">
+                Compromissos({compromissos.lenght})
+            </Texto>
+            
+            {compromissos.lenght === 0 ? (
+                <div className="text-center py-8 bg-gray-50 rounded-default">
+                    <Texto variant="body" color="gray-500">
+                        Nenhum compromisso para hoje
+                    </Texto>
+                </div>
+            ):(
+                compromissos.map(compromisso => (
+                    <CompromissoItem
+                        key={compromisso.id}
+                        horario={compromisso.horario}
+                        titulo={compromisso.titulo}
+                        descricao={compromisso.descricao}
+                        />
+                ))        
+
+            ) }
+            </div>
+            </Card> 
+    )
+}
+
   function App(){
     const hoje = new Date();
     return(
