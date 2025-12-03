@@ -223,6 +223,24 @@ return(
 }
 
 
+function CompromissoItem({horario, titulo, descricao}){
+    return(
+        <div className="bg-white p-4 rounded-default border border-gray-200 hover:shadow-md transition-shadow">
+            <div className = "flex items-center gap-3 mb-2">
+                <span className="text-blue-600 text-lg">
+                    {horario}
+                </span>
+            <Texto variant="h4">{titulo}</Texto>
+            </div>
+            {descricao &&(
+                <Texto variant="small" color="text-gray-600">
+                    {descricao}
+                </Texto>    
+            )}        
+           </div> 
+    )
+}
+
   function App(){
     const hoje = new Date();
     return(
@@ -230,6 +248,20 @@ return(
     <div className = "lg:col-span-1">
         <Calendario diaSelecionado={hoje.getDate()}/>
     </div>
+    
+    <div className = "mt-6 space-y-4">
+        <CompromissoItem
+        horario="09:00"
+        titulo="Reunião de Planejamento"
+        descricao="Alinhar tarefas da sprint"/>
+
+
+        <CompromissoItem
+        horario="14:30"
+        titulo="Chamada com cliente"/>    
+
+    </div>
+
 </div>
     )
   }
