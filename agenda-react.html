@@ -183,7 +183,7 @@ function Calendario({diaSelecionado}){
         dias.push(null)
     }
     for (let dia = 1; dia <= diasNoMes; dia++)
-    dia.push(dia)
+    dias.push(dia)
 
 return(
     <Card title={`${meses[mesAtual]} ${anoAtual}`}>
@@ -227,10 +227,9 @@ return(
     const hoje = new Date();
     return(
    <div>
-
     <div className = "lg:col-span-1">
         <Calendario diaSelecionado={hoje.getDate()}/>
-        </div>
+    </div>
 </div>
     )
   }
