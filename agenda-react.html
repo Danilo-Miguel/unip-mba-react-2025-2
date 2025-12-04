@@ -242,7 +242,7 @@ function CompromissoItem({horario, titulo, descricao}){
 }
 
 function Agenda({data, compromissos}){
-    (
+    return(
         <Card
            title="Agenda do dia"
            variant="primary"
@@ -253,7 +253,7 @@ function Agenda({data, compromissos}){
 
          <div className="space-y-3">
             <Texto variant="h4">
-                Compromissos({compromissos.lenght})
+                Compromissos ({compromissos.lenght})
             </Texto>
             
             {compromissos.lenght === 0 ? (
@@ -280,6 +280,28 @@ function Agenda({data, compromissos}){
 
   function App(){
     const hoje = new Date();
+    
+    const compromissos = [
+        {
+            id: 1,
+            horario: "09:00",
+            titulo: "Reunião de Planejamento",
+            descricao:"Alinhar tarefas da sprint"
+        },
+        {
+            id: 2, 
+            horario: "14:30",
+            titulo: "Chamada com cliente"
+        },
+        {
+            id:3,
+            horario: "18:00",
+            titulo:"Academia",
+            descricao: "Treino de pernas"
+        }
+    ]
+
+
     return(
    <div>
     <div className = "lg:col-span-1">
@@ -287,15 +309,12 @@ function Agenda({data, compromissos}){
     </div>
     
     <div className = "mt-6 space-y-4">
-        <CompromissoItem
-        horario="09:00"
-        titulo="Reunião de Planejamento"
-        descricao="Alinhar tarefas da sprint"/>
 
+    <Agenda
 
-        <CompromissoItem
-        horario="14:30"
-        titulo="Chamada com cliente"/>    
+  data={"03/12/2025"}
+  compromissos={compromissos}  
+          />
 
     </div>
 
