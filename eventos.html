@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventos React</title>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    function App() {
+
+      /* ===== Funções declaradas ===== */
+
+      // Sem parâmetros
+      function alertaSimples() {
+        alert("Clique sem parâmetros");
+      }
+
+      function outraAcaoSimples() {
+        console.log("Outra ação sem parâmetros");
+      }
+
+      // Com parâmetros
+      function alertaComParametro(msg) {
+        alert(msg);
+      }
+
+      function soma(a, b) {
+        console.log("Soma:", a + b);
+      }
+
+      // Com event
+      function clickComEvent(e) {
+        console.log("Tipo do evento:", e.type);
+      }
+
+      function clickTarget(e) {
+        console.log("Elemento clicado:", e.target.tagName);
+      }
+
+      return (
+        <div>
+
+          {/* ===== onClick SEM parâmetros ===== */}
+          <button onClick={alertaSimples}>
+            Click sem parâmetros (alert)
+          </button>
+
+          <button onClick={outraAcaoSimples}>
+            Click sem parâmetros (console)
+          </button>
+
+
+          {/* ===== onClick COM parâmetros ===== */}
+          <button onClick={() => alertaComParametro("Mensagem passada por parâmetro")}>
+            Click com parâmetro (alert)
+          </button>
+
+          <button onClick={() => soma(10, 20)}>
+            Click com parâmetros (soma)
+          </button>
+
+
+          {/* ===== onClick COM event ===== */}
+          <button onClick={clickComEvent}>
+            Click com event (type)
+          </button>
+
+          <button onClick={clickTarget}>
+            Click com event (target)
+          </button>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+
+</body>
+</html>
