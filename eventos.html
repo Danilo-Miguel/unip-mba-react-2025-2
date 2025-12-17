@@ -15,69 +15,38 @@
 
   <script type="text/babel">
 
+    const BotaoSemParametros = () => (
+      <div>
+        <button onClick={() => alert("Clique sem parâmetros")}>Click sem parâmetros (alert)</button>
+        <button onClick={() => console.log("Outra ação sem parâmetros")}>Click sem parâmetros (console)</button>
+      </div>
+    );
+
+    const BotaoComParametros = () => (
+      <div>
+        <button onClick={() => alert("Mensagem passada por parâmetro")}>Click com parâmetro (alert)</button>
+        <button onClick={() => console.log("Soma:", 10 + 20)}>Click com parâmetros (soma)</button>
+      </div>
+    );
+
+    const BotaoComEvent = () => (
+      <div>
+        <button onClick={(e) => console.log("Tipo do evento:", e.type)}>Click com event (type)</button>
+        <button onClick={(e) => console.log("Elemento clicado:", e.target.tagName)}>Click com event (target)</button>
+      </div>
+    );
+
     function App() {
-
-      /* ===== Funções declaradas ===== */
-
-      // Sem parâmetros
-      function alertaSimples() {
-        alert("Clique sem parâmetros");
-      }
-
-      function outraAcaoSimples() {
-        console.log("Outra ação sem parâmetros");
-      }
-
-      // Com parâmetros
-      function alertaComParametro(msg) {
-        alert(msg);
-      }
-
-      function soma(a, b) {
-        console.log("Soma:", a + b);
-      }
-
-      // Com event
-      function clickComEvent(e) {
-        console.log("Tipo do evento:", e.type);
-      }
-
-      function clickTarget(e) {
-        console.log("Elemento clicado:", e.target.tagName);
-      }
-
       return (
-        <div>
+        <div style={{ padding: "16px" }}>
+          <h2>Sem Parâmetros</h2>
+          <BotaoSemParametros />
 
-          {/* ===== onClick SEM parâmetros ===== */}
-          <button onClick={alertaSimples}>
-            Click sem parâmetros (alert)
-          </button>
+          <h2>Com Parâmetros</h2>
+          <BotaoComParametros />
 
-          <button onClick={outraAcaoSimples}>
-            Click sem parâmetros (console)
-          </button>
-
-
-          {/* ===== onClick COM parâmetros ===== */}
-          <button onClick={() => alertaComParametro("Mensagem passada por parâmetro")}>
-            Click com parâmetro (alert)
-          </button>
-
-          <button onClick={() => soma(10, 20)}>
-            Click com parâmetros (soma)
-          </button>
-
-
-          {/* ===== onClick COM event ===== */}
-          <button onClick={clickComEvent}>
-            Click com event (type)
-          </button>
-
-          <button onClick={clickTarget}>
-            Click com event (target)
-          </button>
-
+          <h2>Com Event</h2>
+          <BotaoComEvent />
         </div>
       );
     }
