@@ -17,24 +17,52 @@
 
     const BotaoSemParametros = () => (
       <div>
-        <button onClick={() => alert("Clique sem parâmetros")}>Click sem parâmetros (alert)</button>
-        <button onClick={() => console.log("Outra ação sem parâmetros")}>Click sem parâmetros (console)</button>
+        <button onClick={() => alert("Clique sem parâmetros")}>
+          Click sem parâmetros (alert)
+        </button>
+        <button onClick={() => console.log("Outra ação sem parâmetros")}>
+          Click sem parâmetros (console)
+        </button>
       </div>
     );
 
     const BotaoComParametros = () => (
       <div>
-        <button onClick={() => alert("Mensagem passada por parâmetro")}>Click com parâmetro (alert)</button>
-        <button onClick={() => console.log("Soma:", 10 + 20)}>Click com parâmetros (soma)</button>
+        <button onClick={() => alert("Mensagem passada por parâmetro")}>
+          Click com parâmetro (alert)
+        </button>
+
+        {/* ALTERAÇÃO SOMENTE AQUI */}
+        <input
+          type="text"
+          placeholder="Ex: 10,20"
+          id="valores"
+        />
+        <button
+          onClick={() => {
+            const valores = document.getElementById("valores").value;
+            const [a, b] = valores.split(",").map(Number);
+            alert("Soma: " + (a + b));
+          }}
+        >
+          Click com parâmetros (soma via input)
+        </button>
       </div>
     );
 
     const BotaoComEvent = () => (
       <div>
-        <button onClick={(e) => console.log("Tipo do evento:", e.type)}>Click com event (type)</button>
-        <button onClick={(e) => console.log("Elemento clicado:", e.target.tagName)}>Click com event (target)</button>
+        <button onClick={(e) => console.log("Tipo do evento:", e.type)}>
+          Click com event (type)
+        </button>
+        <button onClick={(e) => console.log("Elemento clicado:", e.target.tagName)}>
+          Click com event (target)
+        </button>
       </div>
     );
+
+
+  
 
     function App() {
       return (
@@ -47,6 +75,8 @@
 
           <h2>Com Event</h2>
           <BotaoComEvent />
+
+          
         </div>
       );
     }
