@@ -14,9 +14,20 @@
 
     function ListCars(){
         const [cars]  = React.useState(["Fusca", "Uno", "Gol", "Parati"])
+        const [buscar, setBuscar] = React.useState("")
         return(
             <ul>
-            {cars.map((car, index) => (
+            <input 
+            type="text"
+            placeholder="Buscar carro"
+            value={buscar}
+            onChange={(e) => setBuscar(e.target.value) }
+            />
+
+                
+            {cars
+                .filter((car) => car.toLowerCase().includes(buscar.toLowerCase()))
+                .map((car, index) => (
                 <li key={`${index}+${car}`}>{car}</li>
             )
             )} 
