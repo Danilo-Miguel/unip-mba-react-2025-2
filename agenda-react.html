@@ -237,11 +237,12 @@
 
         // ===== 5. COMPONENTE ITEM DE COMPROMISSO =====
         // Mostra um compromisso individual
-        // Props: horario, titulo, descricao
-        function CompromissoItem({ horario, titulo, descricao }) {
+        // Props: horario, titulo, descricao, onRemove
+        function CompromissoItem({ id, horario, titulo, descricao,onRemove}) {
             return (
-                <div className="bg-white p-4 rounded-default border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-2">
+                <div className="bg-white p-4 rounded-default border border-gray-200 hover:shadow-md transition-shadow flex justify-between itens-start">
+                    <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
                         <span className="text-blue-600 font-bold text-lg">
                             🕐 {horario}
                         </span>
@@ -253,13 +254,22 @@
                         </Texto>
                     )}
                 </div>
+                <Button
+                   variant = "danger"
+                   size="sm"
+                   onClick={() =>onRemove(id)}
+                   className = "ml-3"
+                >
+                    X
+                </Button>
+                </div>
             );
         }
 
         // ===== 6. COMPONENTE AGENDA =====
         // Componente principal da agenda com lista de compromissos do dia
         // Props: data (texto da data), compromissos (array de objetos)
-        function Agenda({ data, compromissos }) {
+        function Agenda({ data, compromissos, onRemove}) {
             return (
                 <Card 
                     title="Agenda do Dia"
@@ -285,9 +295,11 @@
                             compromissos.map(compromisso => (
                                 <CompromissoItem
                                     key={compromisso.id}
+                                    id={compromisso.id}
                                     horario={compromisso.horario}
                                     titulo={compromisso.titulo}
                                     descricao={compromisso.descricao}
+                                    onRemove={onRemove}
                                 />
                             ))
                         )}
@@ -365,18 +377,9 @@
 
         // ===== APLICAÇÃO PRINCIPAL =====
         // Aqui apenas passamos props estáticas (dados fixos) para os componentes
-        function App() {
-            // Dados fixos para exemplo - SEM useState!
-            const hoje = new Date();
-            const dataFormatada = hoje.toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            // Compromissos de hoje (dados fixos)
-            const compromissosHoje = [
+          function App() {
+            // useState para armazenar a lista de compromissos que pode mudar
+            const [compromissosHoje, setCompromissosHoje] = React.useState([
                 {
                     id: 1,
                     horario: "09:00",
@@ -395,7 +398,21 @@
                     titulo: "Aula de React",
                     descricao: "Estudar Props e Componentes"
                 }
-            ];
+            ]);
+
+            // Função para remover um compromisso ao clicar no botão X
+            const removerCompromisso = (id) => {
+                setCompromissosHoje(compromissosHoje.filter(c => c.id !== id));
+            };
+
+            // Dados fixos para exemplo
+            const hoje = new Date();
+            const dataFormatada = hoje.toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
 
             // Histórico de outros dias (dados fixos)
             const historico = [
@@ -446,6 +463,7 @@
                                 <Agenda 
                                     data={dataFormatada}
                                     compromissos={compromissosHoje}
+                                    onRemove={removerCompromisso}
                                 />
                             </div>
 
@@ -501,7 +519,6 @@
                 </div>
             );
         }
-
         // Renderizar aplicação
         ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
