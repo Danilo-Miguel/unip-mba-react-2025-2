@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src = "https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src = "https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script type="text/babel">
+
+     
+    const BotaoSemParametros = () => (
+        <div style={{padding: "16px"}}>
+         <button onClick={() => alert("Clique sem parâmetros")}> 
+          Clique sem parâmetros 
+        </button>
+        <button onClick={() => console.log("Outra função sem parâmetros")}> 
+          Clique sem parâmetros 
+        </button>
+        </div>
+    )
+
+
+      const BotaoComParametros = () => (
+        <div style={{padding: "16px"}}>
+         <button onClick={() => alert("Mensagem passada por parâmetros")}> 
+          Clique com parâmetros 
+        </button>
+        <button onClick={() => console.log("Soma", 10 + 2)}> 
+          Clique com parâmetros soma 
+        </button>
+        </div>
+    )
+
+      const BotaoComEvent = () => (
+        <div style={{padding: "16px"}}>
+         <button onClick={(e) => console.log("Tipo do evento", e.type)}> 
+          Clique com event 
+        </button>
+        <button onClick={(e) => console.log("Elemento clicado", e.target.tagName)}> 
+          Clique com event target
+        </button>
+        </div>
+    )
+
+
+
+     
+     function App() {
+
+        return (
+            <div style={{padding: "16px"}}>
+              <h2> Sem parâmetros </h2>
+              <BotaoSemParametros/>
+              <BotaoComParametros/>
+              <BotaoComEvent/>
+
+
+            </div>
+            
+        );
+        }
+   ReactDOM.createRoot(document.getElementById('root')).render(
+    <App />
+    );
+    </script>
+    
+</body>
+</html>
