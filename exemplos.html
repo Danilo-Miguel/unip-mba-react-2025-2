@@ -27,11 +27,25 @@
 
       const BotaoComParametros = () => (
         <div style={{padding: "16px"}}>
+
          <button onClick={() => alert("Mensagem passada por parâmetros")}> 
           Clique com parâmetros 
         </button>
-        <button onClick={() => console.log("Soma", 10 + 2)}> 
-          Clique com parâmetros soma 
+
+            <input
+             type="text"
+             placeholder="Ex: 20,30"
+             id="valores"
+             />
+
+             <button 
+                onClick={() => {
+                const valores = document.getElementById("valores").value;
+                const [a, b] = valores.split(",").map(Number);
+                alert("Soma é =" + (a + b));
+             }}
+             >
+             Soma com input
         </button>
         </div>
     )
