@@ -172,12 +172,25 @@
 
         // ===== 4. COMPONENTE CALENDARIO =====
         // Componente de calendário simples mostrando o mês atual
-        // Props: diaSelecionado (número do dia selecionado)
-        function Calendario({ diaSelecionado }) {
+        // Props: diaSelecionado, onDiaClick
+        function Calendario({ diaSelecionado, onDiaClick }) {
             const hoje = new Date();
             const mesAtual = hoje.getMonth();
             const anoAtual = hoje.getFullYear();
             const diaHoje = hoje.getDate();
+
+            // useState para controlar hover
+            const [diaHover, setDiaHover] = React.useState(null);
+
+            // useRef para referência ao container do calendário
+            const calendarioRef = React.useRef(null);
+
+            // useEffect para log quando dia selecionado muda
+            React.useEffect(() => {
+                if (diaSelecionado) {
+                    console.log(`📅 Dia selecionado: ${diaSelecionado}`);
+                }
+            }, [diaSelecionado]);
 
             // Gerar dias do mês
             const diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
@@ -211,19 +224,25 @@
                     </div>
 
                     {/* Dias do Mês */}
-                    <div className="grid grid-cols-7 gap-2">
+                    <div ref={calendarioRef} className="grid grid-cols-7 gap-2">
                         {dias.map((dia, index) => (
                             <div
                                 key={index}
+                                onClick={() => dia && onDiaClick && onDiaClick(dia)}
+                                onMouseEnter={() => dia && setDiaHover(dia)}
+                                onMouseLeave={() => setDiaHover(null)}
                                 className={`
                                     h-10 rounded-button text-sm font-medium
                                     flex items-center justify-center
-                                    ${!dia ? 'invisible' : ''}
+                                    transition-all duration-200
+                                    ${!dia ? 'invisible' : 'cursor-pointer'}
                                     ${dia === diaSelecionado 
-                                        ? 'bg-blue-500 text-white shadow-md' 
+                                        ? 'bg-blue-500 text-white shadow-md scale-110' 
                                         : dia === diaHoje
                                         ? 'bg-blue-100 text-blue-700 border-2 border-blue-500'
-                                        : 'bg-gray-100 text-gray-700'
+                                        : dia === diaHover
+                                        ? 'bg-blue-50 text-blue-600 shadow-sm'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                     }
                                 `}
                             >
@@ -240,7 +259,7 @@
         // Props: horario, titulo, descricao, onRemove
         function CompromissoItem({ id, horario, titulo, descricao,onRemove}) {
             return (
-                <div className="bg-white p-4 rounded-default border border-gray-200 hover:shadow-md transition-shadow flex justify-between itens-start">
+                <div className="bg-white p-4 rounded-default border border-gray-200 hover:shadow-md transition-shadow flex justify-between items-start">
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                         <span className="text-blue-600 font-bold text-lg">
@@ -376,8 +395,8 @@
         }
 
         // ===== APLICAÇÃO PRINCIPAL =====
-        // Aqui apenas passamos props estáticas (dados fixos) para os componentes
-          function App() {
+        // Usando useState, useEffect e eventos
+        function App() {
             // useState para armazenar a lista de compromissos que pode mudar
             const [compromissosHoje, setCompromissosHoje] = React.useState([
                 {
@@ -400,13 +419,27 @@
                 }
             ]);
 
+            // useState para dia selecionado no calendário
+            const hoje = new Date();
+            const [diaSelecionado, setDiaSelecionado] = React.useState(hoje.getDate());
+
+            // useEffect para atualizar título da página quando dia muda
+            React.useEffect(() => {
+                document.title = `Agenda - Dia ${diaSelecionado}`;
+            }, [diaSelecionado]);
+
             // Função para remover um compromisso ao clicar no botão X
             const removerCompromisso = (id) => {
                 setCompromissosHoje(compromissosHoje.filter(c => c.id !== id));
             };
 
+            // Função para selecionar dia no calendário (evento onClick)
+            const handleDiaClick = (dia) => {
+                setDiaSelecionado(dia);
+                console.log(`✅ Dia ${dia} selecionado!`);
+            };
+
             // Dados fixos para exemplo
-            const hoje = new Date();
             const dataFormatada = hoje.toLocaleDateString('pt-BR', {
                 weekday: 'long',
                 year: 'numeric',
@@ -455,7 +488,10 @@
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {/* Coluna 1: Calendário */}
                             <div className="lg:col-span-1">
-                                <Calendario diaSelecionado={hoje.getDate()} />
+                                <Calendario 
+                                    diaSelecionado={diaSelecionado} 
+                                    onDiaClick={handleDiaClick}
+                                />
                             </div>
 
                             {/* Coluna 2: Agenda do Dia */}
