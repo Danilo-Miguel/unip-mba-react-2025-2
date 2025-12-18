@@ -397,31 +397,36 @@
         // ===== APLICAÇÃO PRINCIPAL =====
         // Usando useState, useEffect e eventos
         function App() {
-            // useState para armazenar a lista de compromissos que pode mudar
-            const [compromissosHoje, setCompromissosHoje] = React.useState([
-                {
-                    id: 1,
-                    horario: "09:00",
-                    titulo: "Reunião de Equipe",
-                    descricao: "Discutir andamento do projeto React"
-                },
-                {
-                    id: 2,
-                    horario: "12:30",
-                    titulo: "Almoço com Cliente",
-                    descricao: "Restaurante Villa Bisutti"
-                },
-                {
-                    id: 3,
-                    horario: "15:00",
-                    titulo: "Aula de React",
-                    descricao: "Estudar Props e Componentes"
-                }
-            ]);
-
-            // useState para dia selecionado no calendário
             const hoje = new Date();
+            
+            // useState para dia selecionado no calendário
             const [diaSelecionado, setDiaSelecionado] = React.useState(hoje.getDate());
+
+            // useState com compromissos organizados por dia (chave = dia do mês)
+            const [compromissosPorDia, setCompromissosPorDia] = React.useState({
+                18: [
+                    { id: 1, horario: "09:00", titulo: "Reunião de Equipe", descricao: "Discutir andamento do projeto React" },
+                    { id: 2, horario: "12:30", titulo: "Almoço com Cliente", descricao: "Restaurante Villa Bisutti" },
+                    { id: 3, horario: "15:00", titulo: "Aula de React", descricao: "Estudar Props e Componentes" }
+                ],
+                19: [
+                    { id: 4, horario: "10:00", titulo: "Médico", descricao: "Consulta de rotina" },
+                    { id: 5, horario: "14:00", titulo: "Academia", descricao: "" }
+                ],
+                20: [
+                    { id: 6, horario: "11:00", titulo: "Dentista", descricao: "Limpeza" }
+                ]
+            });
+
+            // useState para compromissos do dia atual (filtrado)
+            const [compromissosHoje, setCompromissosHoje] = React.useState([]);
+
+            // useEffect para atualizar compromissos quando dia muda
+            React.useEffect(() => {
+                const compromissos = compromissosPorDia[diaSelecionado] || [];
+                setCompromissosHoje(compromissos);
+                console.log(`📅 Compromissos do dia ${diaSelecionado}:`, compromissos.length);
+            }, [diaSelecionado, compromissosPorDia]);
 
             // useEffect para atualizar título da página quando dia muda
             React.useEffect(() => {
@@ -430,7 +435,10 @@
 
             // Função para remover um compromisso ao clicar no botão X
             const removerCompromisso = (id) => {
-                setCompromissosHoje(compromissosHoje.filter(c => c.id !== id));
+                setCompromissosPorDia(prev => ({
+                    ...prev,
+                    [diaSelecionado]: prev[diaSelecionado].filter(c => c.id !== id)
+                }));
             };
 
             // Função para selecionar dia no calendário (evento onClick)
